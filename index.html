@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Study Planner · Term 3 Weighted Assessments</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div class="app">
+
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="brand">
+        <span class="brand-mark">✳</span>
+        <div>
+          <h1>Study Planner</h1>
+          <p class="brand-sub">Dunman Secondary · Sec 2 · Term 3 Weighted Assessments</p>
+        </div>
+      </div>
+      <div class="today-chip" id="todayChip">—</div>
+    </div>
+  </header>
+
+  <main class="layout">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+
+      <section class="card">
+        <h2>Your subject bands</h2>
+        <p class="hint">Tests differ slightly by band. Pick yours so the plan only shows what applies to you.</p>
+
+        <label class="field">
+          <span>General band (Maths, Science, Humanities, English, Lit)</span>
+          <select id="bandSelect">
+            <option value="G3">G3</option>
+            <option value="G2">G2</option>
+            <option value="G1">G1</option>
+          </select>
+        </label>
+
+        <label class="field">
+          <span>Mother Tongue Language</span>
+          <select id="mtLang">
+            <option value="none">Not taking / skip</option>
+            <option value="CL">Chinese (CL)</option>
+            <option value="ML">Malay (ML)</option>
+            <option value="TL">Tamil (TL)</option>
+          </select>
+        </label>
+
+        <label class="field checkbox-field">
+          <input type="checkbox" id="mtHigher">
+          <span>I take Higher Mother Tongue</span>
+        </label>
+      </section>
+
+      <section class="card">
+        <h2>Add a commitment</h2>
+        <p class="hint">Homework, tuition, CCA — anything that blocks study time. Saved on this device.</p>
+
+        <form id="commitForm">
+          <label class="field">
+            <span>Label</span>
+            <input type="text" id="cLabel" placeholder="e.g. Maths tuition" required>
+          </label>
+
+          <label class="field">
+            <span>Type</span>
+            <select id="cType">
+              <option value="tuition">Tuition</option>
+              <option value="homework">Homework</option>
+              <option value="cca">CCA / Activity</option>
+              <option value="other">Other</option>
+            </select>
+          </label>
+
+          <label class="field">
+            <span>Repeats on</span>
+            <select id="cDay">
+              <option value="1">Every Monday</option>
+              <option value="2">Every Tuesday</option>
+              <option value="3">Every Wednesday</option>
+              <option value="4">Every Thursday</option>
+              <option value="5">Every Friday</option>
+              <option value="6">Every Saturday</option>
+              <option value="0">Every Sunday</option>
+              <option value="once">Just one date</option>
+            </select>
+          </label>
+
+          <label class="field" id="onceDateField" style="display:none;">
+            <span>Date</span>
+            <input type="date" id="cDate">
+          </label>
+
+          <div class="field-row">
+            <label class="field">
+              <span>Start time</span>
+              <input type="time" id="cStart" value="17:00" required>
+            </label>
+            <label class="field">
+              <span>Duration (min)</span>
+              <input type="number" id="cDuration" value="60" min="15" step="15" required>
+            </label>
+          </div>
+
+          <button type="submit" class="btn-primary">Add commitment</button>
+        </form>
+
+        <ul class="commit-list" id="commitList"></ul>
+      </section>
+
+      <section class="card">
+        <h2>Study window</h2>
+        <p class="hint">When you're realistically free to study on weekdays vs weekends.</p>
+        <div class="field-row">
+          <label class="field">
+            <span>Weekday evenings, from</span>
+            <input type="time" id="weekdayStart" value="17:30">
+          </label>
+          <label class="field">
+            <span>until</span>
+            <input type="time" id="weekdayEnd" value="21:30">
+          </label>
+        </div>
+        <div class="field-row">
+          <label class="field">
+            <span>Weekends, from</span>
+            <input type="time" id="weekendStart" value="09:30">
+          </label>
+          <label class="field">
+            <span>until</span>
+            <input type="time" id="weekendEnd" value="18:00">
+          </label>
+        </div>
+        <button class="btn-primary" id="regenBtn">Generate my schedule</button>
+      </section>
+
+    </aside>
+
+    <!-- MAIN SCHEDULE -->
+    <section class="main-panel">
+
+      <div class="legend">
+        <span class="legend-item"><i class="dot dot-study"></i>Study block</span>
+        <span class="legend-item"><i class="dot dot-break"></i>Break</span>
+        <span class="legend-item"><i class="dot dot-commit"></i>Your commitment</span>
+        <span class="legend-item"><i class="dot dot-test"></i>Test day</span>
+        <span class="legend-item"><i class="dot dot-rest"></i>Rest / light</span>
+      </div>
+
+      <div id="scheduleOutput" class="schedule-output">
+        <!-- populated by app.js -->
+      </div>
+
+      <details class="card reference-card">
+        <summary>Reference: full Term 3 Weighted Assessment Schedule</summary>
+        <div id="referenceTable"></div>
+      </details>
+
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    <p>Built from the Term 3 Weighted Assessment Schedule. Adjust your bands, commitments and study window any time — the plan regenerates instantly.</p>
+  </footer>
+
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
