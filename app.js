@@ -1,4 +1,30 @@
 /* =========================================================
+   Device theme detection (light / dark)
+   The actual color swap is done in styles.css via the
+   `prefers-color-scheme` media query, which the browser applies
+   automatically and keeps in sync with the OS setting live. This
+   listener just keeps the mobile browser chrome color (the
+   <meta name="theme-color"> tag) matching, and re-checks whenever
+   the device's setting changes without needing a page reload.
+   ========================================================= */
+function applyThemeColorMeta(isDark) {
+  const meta = document.getElementById("themeColorMeta");
+  if (meta) meta.setAttribute("content", isDark ? "#1E1C19" : "#F5F4EE");
+  document.documentElement.setAttribute("data-theme", isDark ? "dark" : "light");
+}
+
+function initThemeWatcher() {
+  const media = window.matchMedia("(prefers-color-scheme: dark)");
+  applyThemeColorMeta(media.matches);
+  // addEventListener is the modern API; addListener is a Safari<14 fallback
+  if (media.addEventListener) {
+    media.addEventListener("change", (e) => applyThemeColorMeta(e.matches));
+  } else if (media.addListener) {
+    media.addListener((e) => applyThemeColorMeta(e.matches));
+  }
+}
+
+/* =========================================================
    Term 3 Weighted Assessment data (from the school schedule)
    Dates are ISO strings for the fixed test weeks. English's
    two performance tasks (Weeks 1-4) don't have exact printed
@@ -27,7 +53,6 @@ const TESTS = [
   { subject: "Science", level: "G1", topic: "Topic 11 Human Reproduction, Topic 12 Taking Good Care of My Body", marks: 25, format: "Written Test", start: "2026-08-17", end: "2026-08-21", weekLabel: "Week 8" },
   { subject: "Literature", level: "G3", topic: "Essay: Unseen Poetry", marks: 25, format: "Written Test", start: "2026-08-17", end: "2026-08-21", weekLabel: "Week 8" },
   { subject: "Literature", level: "G2", topic: "Essay: Unseen Poetry", marks: 25, format: "Written Test", start: "2026-08-17", end: "2026-08-21", weekLabel: "Week 8" },
-  { subject: "D&T", level: "CMN", topic: "Design & Make Project — research into design specs & considering relevant factors", marks: 15, format: "Performance Task", start: "2026-08-17", end: "2026-08-21", weekLabel: "Week 8" },
 
   // Week 9: 24/08 - 28/08/2026
   { subject: "Mother Tongue", level: "G3", mtType: "Higher", lang: "CL", topic: "P2 Language Usage Components: Ch.3 & 4", marks: 50, format: "Written Test", start: "2026-08-24", end: "2026-08-28", weekLabel: "Week 9" },
@@ -42,7 +67,6 @@ const TESTS = [
   { subject: "Mother Tongue", level: "G3", mtType: "Standard", lang: "TL", topic: "P2 Language Usage and Comprehension", marks: 40, format: "Written Test", start: "2026-08-24", end: "2026-08-28", weekLabel: "Week 9" },
   { subject: "Mother Tongue", level: "G2", mtType: "Standard", lang: "TL", topic: "P2 Language Usage and Comprehension", marks: 40, format: "Written Test", start: "2026-08-24", end: "2026-08-28", weekLabel: "Week 9" },
   { subject: "Mother Tongue", level: "G1", mtType: "Standard", lang: "TL", topic: "P2 Language Usage and Comprehension", marks: 25, format: "Written Test", start: "2026-08-24", end: "2026-08-28", weekLabel: "Week 9" },
-  { subject: "Art", level: "CMN", topic: "Our Style, Our Story — Research and Development of Ideas", marks: 100, format: "Performance Task", start: "2026-08-24", end: "2026-08-28", weekLabel: "Week 9" },
 ];
 
 const DAY_NAMES = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
@@ -474,6 +498,7 @@ function refreshSchedule() {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
+  initThemeWatcher();
   renderToday();
   applySettingsToForm(loadSettings());
   renderCommitList(loadCommitments());
