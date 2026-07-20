@@ -13,6 +13,7 @@ A lightweight study planner for my **Term 3 Weighted Assessments**. It creates a
 * 📈 Prioritizes subjects by assessment weight and upcoming test dates.
 * 😌 Keeps Sundays as light review days.
 * 💾 Saves everything locally using your browser's `localStorage`.
+* 🌙 Automatically matches your device's light/dark appearance setting.
 
 ## 🛠️ Customizing
 
