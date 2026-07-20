@@ -1,6 +1,10 @@
 :root {
+  color-scheme: light dark;
+
+  /* light theme (default) */
   --cream: #F5F4EE;
   --cream-card: #FBFAF6;
+  --surface: #FFFFFF;
   --ink: #2E2A24;
   --ink-soft: #6B6558;
   --line: #E4E0D4;
@@ -12,8 +16,33 @@
   --slate-soft: #E3E9EE;
   --gold: #E4B65E;
   --gold-soft: #FBEBC9;
+  --test-soft: #F6D9D5;
+  --test-strong: #C1443A;
   --radius: 14px;
   --shadow: 0 1px 2px rgba(46,42,36,0.06), 0 4px 16px rgba(46,42,36,0.05);
+}
+
+/* Dark theme — applied automatically when the device/browser prefers dark */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --cream: #1E1C19;
+    --cream-card: #28251F;
+    --surface: #322E27;
+    --ink: #ECE7DC;
+    --ink-soft: #A39C8C;
+    --line: #3E3A32;
+    --terracotta: #E2896A;
+    --terracotta-soft: #4A362C;
+    --sage: #9FB89A;
+    --sage-soft: #303C2C;
+    --slate: #97AABA;
+    --slate-soft: #2A333C;
+    --gold: #E7C179;
+    --gold-soft: #443A20;
+    --test-soft: #4A2C29;
+    --test-strong: #E08175;
+    --shadow: 0 1px 2px rgba(0,0,0,0.35), 0 4px 18px rgba(0,0,0,0.35);
+  }
 }
 
 * { box-sizing: border-box; }
@@ -26,6 +55,7 @@ html, body {
   font-family: "Roboto Slab", serif;
   font-weight: 400;
   line-height: 1.5;
+  transition: background-color 0.2s ease, color 0.2s ease;
 }
 
 h1, h2, h3 {
@@ -138,7 +168,7 @@ input, select {
   padding: 9px 10px;
   border-radius: 8px;
   border: 1px solid var(--line);
-  background: #fff;
+  background: var(--surface);
   color: var(--ink);
 }
 input:focus, select:focus {
@@ -183,7 +213,7 @@ input:focus, select:focus {
   align-items: center;
   justify-content: space-between;
   gap: 8px;
-  background: #fff;
+  background: var(--surface);
   border: 1px solid var(--line);
   border-radius: 8px;
   padding: 8px 10px;
@@ -217,7 +247,7 @@ input:focus, select:focus {
 .dot-study { background: var(--terracotta); }
 .dot-break { background: var(--gold); }
 .dot-commit { background: var(--slate); }
-.dot-test { background: #C1443A; }
+.dot-test { background: var(--test-strong); }
 .dot-rest { background: var(--sage); }
 
 .schedule-output { display: flex; flex-direction: column; gap: 22px; }
@@ -238,7 +268,7 @@ input:focus, select:focus {
   padding: 14px 18px;
   margin-bottom: 10px;
 }
-.day-card.is-test { border-color: #C1443A; }
+.day-card.is-test { border-color: var(--test-strong); }
 .day-card-head {
   display: flex;
   align-items: baseline;
@@ -261,7 +291,7 @@ input:focus, select:focus {
 .block-study { background: var(--terracotta-soft); }
 .block-break { background: var(--gold-soft); }
 .block-commit { background: var(--slate-soft); }
-.block-test { background: #F6D9D5; font-weight: 600; }
+.block-test { background: var(--test-soft); font-weight: 600; }
 .block-rest { background: var(--sage-soft); }
 
 .empty-note {
